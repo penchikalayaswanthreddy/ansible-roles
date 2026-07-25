@@ -1,4 +1,4 @@
-  - name: Copy mongo repo
+- name: Copy mongo repo
     ansible.builtin.copy:
       src: mongo.repo
       dest: /etc/yum.repos.d/mongo.repo
