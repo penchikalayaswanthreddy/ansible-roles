@@ -4,15 +4,15 @@
       dest: /etc/yum.repos.d/mongo.repo
   
   - name: install mongodb 
-    ansible.builtin.dnf:
-      name: mongodb-org
-      state: present
+    ansible.builtin.include_role:
+      name: common
+      tasks_from: install_package
 
   - name: start and enable mongod
-    ansible.builtin.service:
-      name: mongod
-      state: started
-      enabled: yes
+    ansible.builtin.include_role:
+      name: common
+      tasks_from: start_enable_service
+    
 
   - name: mongodb port open
     ansible.builtin.replace:
@@ -21,6 +21,8 @@
       replace: '0.0.0.0'
   
   - name: Restart mongod 
-    ansible.builtin.service:
-      name: mongod
-      state: restarted
+    ansible.builtin.include_role:
+      name: common
+      tasks_from: restart_service
+
+    

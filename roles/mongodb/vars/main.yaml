@@ -1,0 +1,2 @@
+package_name: mongodb-org
+service_name: mongod
