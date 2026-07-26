@@ -19,10 +19,5 @@
       path: /etc/mongod.conf
       regexp: '127.0.0.1'
       replace: '0.0.0.0'
-  
-  - name: Restart mongod 
-    ansible.builtin.include_role:
-      name: common
-      tasks_from: restart_service
-
+    notify: Restart mongod
     
