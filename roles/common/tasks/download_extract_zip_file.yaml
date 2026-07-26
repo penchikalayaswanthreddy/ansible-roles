@@ -1,6 +1,7 @@
 - name: Download zip file
   ansible.builtin.get_url:
       url: "https://roboshop-artifacts.s3.amazonaws.com/{{ service_name }}-v3.zip"
+      dest: "/tmp/{{ service_name }}.zip"
 
 - name: Extract zip file
   ansible.builtin.unarchive:
