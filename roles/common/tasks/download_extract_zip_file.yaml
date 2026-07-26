@@ -10,5 +10,5 @@
       
 - name: Run npm install in /app
   ansible.builtin.command: npm install
-      args:
-        chdir: /app
+  args:
+    chdir: /app
