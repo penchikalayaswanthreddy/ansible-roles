@@ -1,0 +1,14 @@
+- name: Download zip file
+  ansible.builtin.get_url:
+      url: "https://roboshop-artifacts.s3.amazonaws.com/{{ service_name }}-v3.zip"
+
+- name: Extract zip file
+  ansible.builtin.unarchive:
+      src: "/tmp/{{ service_name }}.zip"
+      dest: /app
+      remote_src: yes
+      
+- name: Run npm install in /app
+  ansible.builtin.command: npm install
+      args:
+        chdir: /app

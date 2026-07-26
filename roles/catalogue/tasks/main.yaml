@@ -1,0 +1,72 @@
+  - name: disable nodejs
+    ansible.builtin.command: dnf module disable nodejs -y
+      
+  - name: enable nodejs
+    ansible.builtin.command: dnf module enable nodejs:20 -y
+
+  - name: install nodejs
+    ansible.builtin.include_role:
+      name: common
+      tasks_from: install_package
+
+  - name: create system user roboshop
+    ansible.builtin.include_role:
+      name: common
+      tasks_from: create_system_user
+
+  - name: create app directory
+    ansible.builtin.include_role:
+      name: common
+      tasks_from: create_app_dir
+
+
+  - name: download extract and build the code
+    ansible.builtin.include_role:
+      name: common
+      tasks_from: download_extract_zip_file
+
+  - name: Copy catalogue service file
+    ansible.builtin.template:
+      src: catalogue.service.j2
+      dest: /etc/systemd/system/catalogue.service
+
+
+  - name: systemd reload
+    ansible.builtin.include_role:
+      name: common
+      tasks_from: systemd_reload
+
+  - name: start and enable catlogue
+    ansible.builtin.include_role:
+      name: common
+      tasks_from: start_enable_service
+
+  - name: Copy mongo repo
+    ansible.builtin.copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+  
+  - name: install mongo client
+    ansible.builtin.dnf:
+      name: mongodb-mongosh
+      state: present
+
+  
+  - name: Load MongoDB schema
+    ansible.builtin.shell: "mongosh --host mongodb.yaswanthreddypenchikala.online < /app/db/master-data.js"
+
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
